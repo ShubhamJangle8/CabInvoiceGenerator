@@ -11,19 +11,27 @@ public class InvoiceGenerator {
 		if(total_fare < MIN_FARE) {
 			return MIN_FARE;
 		}
-		return total_fare;
+		return Math.max(total_fare, MIN_FARE);
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("Welcome to the Invoice Generator Service");
-	}
-
 	public double calculateTotalFare(Ride[] rides) {
 		double total_fare = 0;
 		for(Ride ride : rides) {
 			total_fare += this.calculateTotalFare(ride.distance, ride.time);
 		}
-		return total_fare;
+		return Math.max(total_fare, MIN_FARE);
+	} 
+	
+	public InvoiceSummary getSummary(Ride[] rides) {
+		double total_fare = 0;
+		for(Ride ride : rides) {
+			total_fare += this.calculateTotalFare(ride.distance, ride.time);
+		}
+		return new InvoiceSummary(rides.length, total_fare);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Welcome to the Invoice Generator Service");
 	}
 
 }
