@@ -18,4 +18,12 @@ public class InvoiceGenerator {
 		System.out.println("Welcome to the Invoice Generator Service");
 	}
 
+	public double calculateTotalFare(Ride[] rides) {
+		double total_fare = 0;
+		for(Ride ride : rides) {
+			total_fare += this.calculateTotalFare(ride.distance, ride.time);
+		}
+		return total_fare;
+	}
+
 }
