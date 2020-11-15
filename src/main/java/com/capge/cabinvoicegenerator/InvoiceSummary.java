@@ -1,4 +1,4 @@
-package CabInvoiceGenerator;
+package com.capge.cabinvoicegenerator;
 
 public class InvoiceSummary {
 	private double average;

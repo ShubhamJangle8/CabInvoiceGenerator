@@ -1,4 +1,4 @@
-package CabInvoiceGenerator;
+package com.capge.cabinvoicegenerator;
 
 public class Ride {
 	public int time;

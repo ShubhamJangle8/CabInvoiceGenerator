@@ -1,4 +1,4 @@
-package CabInvoiceGenerator;
+package com.capge.cabinvoicegenerator;
 
 import static org.junit.Assert.assertEquals;
 

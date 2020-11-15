@@ -1,4 +1,4 @@
-package CabInvoiceGenerator;
+package com.capge.cabinvoicegenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,15 +11,15 @@ public class RideRepository {
 	public RideRepository() {
 		userRides = new HashMap<>();
 	}
-	
+
 	public void addRides(String userId, Ride[] rides) {
 		ArrayList<Ride> userRideList = userRides.get(userId);
-		if(userRideList == null)
+		if (userRideList == null)
 			userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));
 		else
 			userRides.get(userId).addAll(Arrays.asList(rides));
 	}
-	
+
 	public Ride[] getRides(String userId) {
 		return userRides.get(userId).toArray(new Ride[0]);
 	}
