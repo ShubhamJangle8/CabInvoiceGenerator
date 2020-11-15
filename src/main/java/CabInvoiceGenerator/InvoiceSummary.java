@@ -1,33 +1,24 @@
 package CabInvoiceGenerator;
 
 public class InvoiceSummary {
-
-	private int noOfRides;
-	private double totalFare;
 	private double average;
+	private double totalfare;
+	private int numOfRides;
 
-	public InvoiceSummary(int noOfRides, double totalFare) {
-		this.noOfRides = noOfRides;
-		this.totalFare = totalFare;
-		this.average = totalFare / noOfRides;
+	public InvoiceSummary(int numOfRides, double totalFare) {
+		this.numOfRides = numOfRides;
+		this.totalfare = totalFare;
+		this.average = numOfRides / totalFare;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(Object o) {
+		if (this == o)
 			return true;
-		if (obj == null)
+		if (o == null || getClass() != o.getClass())
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		InvoiceSummary other = (InvoiceSummary) obj;
-		if (Double.doubleToLongBits(average) != Double.doubleToLongBits(other.average))
-			return false;
-		if (noOfRides != other.noOfRides)
-			return false;
-		if (Double.doubleToLongBits(totalFare) != Double.doubleToLongBits(other.totalFare))
-			return false;
-		return true;
+		InvoiceSummary that = (InvoiceSummary) o;
+		return numOfRides == that.numOfRides && Double.compare(that.totalfare, totalfare) == 0
+				&& Double.compare(that.average, average) == 0;
 	}
-	
 }

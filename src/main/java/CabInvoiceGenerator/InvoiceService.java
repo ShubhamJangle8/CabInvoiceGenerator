@@ -1,47 +1,31 @@
 package CabInvoiceGenerator;
 
 public class InvoiceService {
+	private RideRepository rideRepository;
 
-	private static final double COST_PER_KM = 10;
-	private static final int COST_PER_TIME = 1;
-	private static final double MIN_FARE = 5;
-	private RideRepository rideRepository = null;
-	
-	public InvoiceService() {
-		this.rideRepository  = new RideRepository();
-	}
-	
-	public double calculateTotalFare(double distance, int time) {
-		double total_fare = distance * COST_PER_KM + time * COST_PER_TIME;
-		if(total_fare < MIN_FARE) {
-			return MIN_FARE;
+
+	/**
+	 * UC 2, 3 : calculates total fare of multiple rides and returning the invoice
+	 * generated
+	 * 
+	 * @param rides
+	 * @return
+	 */
+	public InvoiceSummary calculateFare(Ride[] rides) {
+		double totalFare = 0;
+		for (Ride ride : rides) {
+			totalFare += ride.cabRide.calcCostOfCabRide(ride);
 		}
-		return Math.max(total_fare, MIN_FARE);
+		InvoiceSummary invoiceSummary = new InvoiceSummary(rides.length, totalFare);
+		return invoiceSummary;
 	}
 	
-	public double calculateTotalFare(Ride[] rides) {
-		double total_fare = 0;
-		for(Ride ride : rides) {
-			total_fare += this.calculateTotalFare(ride.distance, ride.time);
-		}
-		return Math.max(total_fare, MIN_FARE);
-	} 
-	
-	public InvoiceSummary getSummary(Ride[] rides) {
-		double total_fare = 0;
-		for(Ride ride : rides) {
-			total_fare += this.calculateTotalFare(ride.distance, ride.time);
-		}
-		
-		return new InvoiceSummary(rides.length, total_fare);
+	public InvoiceSummary getInvoiceSummary(String userId) {
+		return this.calculateFare(rideRepository.getRides(userId));
 	}
 	
-	public void addRides(String userID, Ride[] rides) {
-		rideRepository.addRide(userID, rides);
-	}
-	
-	public InvoiceSummary getSummaryForUserID(String userID) {
-		return this.getSummary(rideRepository.getRides(userID));
+	public void setRideRepository(RideRepository rideRepository) {
+		this.rideRepository = rideRepository;
 	}
 	
 	public static void main(String[] args) {
